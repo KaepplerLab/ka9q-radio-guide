@@ -39,3 +39,22 @@ Copy config file from github directory to /etc/radio and edit for use.
 ```
 cp ~/ka9q-radio/config/radiod@rx888-generic.conf /etc/radio
 ```
+
+## Build wisdom for fftw3
+
+This takes forever so just leave it running and walk away for a bit
+```
+cd /etc/fftw
+touch nwisdom
+time fftwf-wisdom -v -T 1 -o nwisdom rof500000 rof36480 cob1920 cob1200 cob960 cob800 cob480 cob320 cob300 cob200 cob160 cob150
+cp -i nwisdom wisdom f
+cp wisdomf /var/lib/ka9q-radio/wisdom
+```
+
+## Testing
+
+```
+cd /etc/radio
+radiod -v <file you copied/edited here in earlier step>
+```
+If this works then you can start the ka9q-radio system as a service. Always set frequency to less than half the samplerate in the [global] section.
